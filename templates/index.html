@@ -1,46 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>RESCUE MODE - ROBOT</title>
+    <meta charset="utf-8">
+    <title>NEURO-ARM PRO v3.0</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <style>
-        body { background: #111; color: #0f0; font-family: monospace; display: flex; }
-        #ui { width: 250px; padding: 20px; border-right: 1px solid #0f0; }
-        #screen { flex-grow: 1; display: flex; justify-content: center; align-items: center; position: relative; height: 100vh; }
-        .block { position: absolute; border: 2px solid #0f0; transition: 0.1s; }
-        #base_v { width: 100px; height: 20px; background: #222; bottom: 50px; }
-        #arm1_v { width: 20px; height: 150px; background: #333; bottom: 70px; transform-origin: bottom center; }
+        :root { --neon: #00f2ff; --bg: #0a0b10; }
+        body { margin: 0; background: var(--bg); color: var(--neon); font-family: sans-serif; display: flex; height: 100vh; overflow: hidden; }
+        #ui { width: 300px; padding: 25px; background: rgba(15, 17, 26, 0.95); border-right: 2px solid var(--neon); z-index: 100; }
+        #container { flex-grow: 1; position: relative; }
+        .slider-box { margin-bottom: 30px; }
+        input[type=range] { width: 100%; cursor: pointer; accent-color: var(--neon); }
+        .val { float: right; color: #fff; background: #222; padding: 2px 8px; border-radius: 4px; font-size: 11px; }
+        h2 { font-size: 20px; text-transform: uppercase; border-bottom: 1px solid #333; padding-bottom: 10px; }
     </style>
 </head>
 <body>
     <div id="ui">
-        <h2>ROBO_RESCUE</h2>
-        <label>BASE</label><br>
-        <input type="range" id="j1" min="-100" max="100" value="0"><br><br>
-        <label>ARM</label><br>
-        <input type="range" id="j2" min="-90" max="90" value="0">
-        <p id="msg">Status: Čekam komandu...</p>
-    </div>
-    <div id="screen">
-        <div id="base_v" class="block">
-            <div id="arm1_v" class="block"></div>
+        <h2>NEURO-ARM 3.0</h2>
+        <div class="slider-box">
+            <label>BAZA <span id="v1" class="val">0°</span></label>
+            <input type="range" id="j1" min="-180" max="180" value="0">
+        </div>
+        <div class="slider-box">
+            <label>RAME <span id="v2" class="val">-45°</span></label>
+            <input type="range" id="j2" min="-90" max="45" value="-45">
+        </div>
+        <div class="slider-box">
+            <label>LAKAT <span id="v3" class="val">90°</span></label>
+            <input type="range" id="j3" min="0" max="150" value="90">
         </div>
     </div>
+    <div id="container"></div>
 
     <script>
-        const j1 = document.getElementById('j1');
-        const j2 = document.getElementById('j2');
-        const base = document.getElementById('base_v');
-        const arm = document.getElementById('arm1_v');
-
-        j1.oninput = () => {
-            base.style.left = (50 + parseInt(j1.value)) + "%";
-            document.getElementById('msg').innerText = "Pomeram bazu...";
-        };
-
-        j2.oninput = () => {
-            arm.style.transform = `rotate(${j2.value}deg)`;
-            document.getElementById('msg').innerText = "Rotiram ruku...";
-        };
+        // ... (ovde ide sav onaj JavaScript kod iz prethodnog primera) ...
+        // Sve što je bilo između <script> tagova prebaci ovde
     </script>
 </body>
 </html>
