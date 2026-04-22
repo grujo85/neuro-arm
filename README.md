@@ -1,6 +1,6 @@
 Markdown
 
-# 🤖 NEURO-ARM v2.0
+# 🤖 NEURO-ARM v1.0
 ### Interactive 3D Robotic Arm Simulation
 
 A lightweight, web-based robotic arm simulator developed using **Flask** and **Three.js**. This project demonstrates real-time joint visualization and 3D rendering directly in the browser.
