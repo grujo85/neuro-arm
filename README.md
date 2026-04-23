@@ -27,6 +27,7 @@ To get a local copy up and running, follow these simple steps:
 First, download the project by running:
 
 git clone https://github.com/grujo85/neuro-arm.git
+
 cd neuro-arm
 
 2. Install dependencies
