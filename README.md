@@ -22,22 +22,30 @@ A lightweight, web-based robotic arm simulator developed using **Flask** and **T
 
 To get a local copy up and running, follow these simple steps:
 
-1. **Clone the repository:**
-   bash
-   git clone [https://github.com/grujo85/neuro-arm.git](https://github.com/grujo85/neuro-arm.git)
-2.**Install dependencies:**
-   Bash
+1. Clone the repository
 
-   pip install -r requirements.txt
-   
-3.**Launch the server:**
-   Bash
+First, download the project by running:
 
-   python app.py
-   
-4.**Access the simulation:**
-   
-   Open your browser and navigate to http://127.0.0.1:5000
+git clone https://github.com/grujo85/neuro-arm.git
+cd neuro-arm
+
+2. Install dependencies
+
+It is recommended to use a virtual environment. Install the required libraries using:
+
+pip install -r requirements.txt
+
+3. Launch the server
+
+Start the application by running the following command:
+
+python app.py
+
+4. Access the simulation
+
+Once the server is running, open your browser and navigate to:
+
+    URL: http://127.0.0.1:5000
     
 ## 🌐 Live Demo
 
