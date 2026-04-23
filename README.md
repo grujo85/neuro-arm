@@ -29,10 +29,12 @@ To get a local copy up and running, follow these simple steps:
    Bash
 
    pip install -r requirements.txt
+   
 3.**Launch the server:**
    Bash
 
    python app.py
+   
 4.**Access the simulation:**
    
    Open your browser and navigate to http://127.0.0.1:5000
