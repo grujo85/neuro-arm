@@ -2,49 +2,31 @@
 <html lang="sr">
 <head>
     <meta charset="utf-8">
-    <title>NASA NEURO-ARM v3.6</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ROBOT ARM V3</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <style>
-        :root { 
-            --turquoise: #00f5ff; /* Tirkizna boja */
-            --nasa-white: #ffffff; 
-            --bg: #f0f2f5; /* Veoma svetla siva */
-            --ui-bg: rgba(255, 255, 255, 0.95);
-        }
-        
-        body { margin: 0; background: var(--bg); color: #333; font-family: 'Segoe UI', sans-serif; display: flex; height: 100vh; overflow: hidden; flex-direction: row; }
-        
-        #ui { 
-            width: 280px; padding: 25px; background: var(--ui-bg); 
-            border-right: 1px solid #ddd; z-index: 100; display: flex; flex-direction: column; 
-        }
-        
+        :root { --cyan: #00f5ff; --dark: #0f1115; }
+        body { margin: 0; background: var(--dark); color: #eee; font-family: sans-serif; display: flex; height: 100vh; overflow: hidden; }
+        #ui { width: 260px; padding: 20px; background: rgba(20, 25, 35, 0.95); border-right: 1px solid #333; z-index: 100; }
         #container { flex-grow: 1; position: relative; }
+        .slider-box { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-size: 11px; color: #888; text-transform: uppercase; }
+        input[type=range] { width: 100%; accent-color: var(--cyan); cursor: pointer; }
+        .val { float: right; color: var(--cyan); font-family: monospace; }
         
-        h2 { font-size: 18px; margin-top: 0; margin-bottom: 30px; color: #111; border-bottom: 2px solid var(--turquoise); padding-bottom: 10px; }
-        h2 span { color: var(--turquoise); }
-
-        .slider-box { margin-bottom: 25px; }
-        label { display: block; margin-bottom: 8px; font-size: 11px; font-weight: bold; text-transform: uppercase; color: #666; }
-        
-        input[type=range] { width: 100%; cursor: pointer; accent-color: var(--turquoise); height: 12px; }
-        .val { float: right; color: var(--turquoise); background: #222; padding: 2px 8px; border-radius: 4px; font-weight: bold; }
-
         @media (max-width: 768px) {
             body { flex-direction: column-reverse; }
-            #ui { width: 100%; border-right: none; border-top: 1px solid #ddd; padding: 15px; }
+            #ui { width: 100%; height: auto; border-right: none; border-top: 1px solid #333; padding: 15px; box-sizing: border-box; }
             .slider-group { display: flex; gap: 10px; }
-            .slider-box { flex: 1; margin-bottom: 0; }
-            h2 { font-size: 16px; margin-bottom: 15px; text-align: center; }
+            .slider-box { flex: 1; margin: 0; }
         }
     </style>
 </head>
 <body>
 
 <div id="ui">
-    <h2>NASA <span>NEURO-ARM</span></h2>
     <div class="slider-group">
         <div class="slider-box">
             <label>Baza <span id="v1" class="val">0</span></label>
@@ -69,12 +51,10 @@
     function init() {
         const container = document.getElementById('container');
         scene = new THREE.Scene();
-        scene.background = new THREE.Color(0xf0f2f5);
-        scene.fog = new THREE.Fog(0xf0f2f5, 15, 50);
+        scene.background = new THREE.Color(0x0f1115);
         
         camera = new THREE.PerspectiveCamera(50, container.clientWidth/container.clientHeight, 0.1, 1000);
-        const isMobile = window.innerWidth <= 768;
-        camera.position.set(isMobile ? 18 : 12, 12, isMobile ? 22 : 15);
+        camera.position.set(12, 10, 15);
 
         renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(container.clientWidth, container.clientHeight);
@@ -84,53 +64,38 @@
         controls = new THREE.OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
 
-        // Svetlo
-        scene.add(new THREE.AmbientLight(0xffffff, 1.2));
-        const dLight = new THREE.DirectionalLight(0xffffff, 0.6);
-        dLight.position.set(10, 20, 10);
-        scene.add(dLight);
-
-        // Mreža (Grid) - tirkizna
-        const grid = new THREE.GridHelper(30, 30, 0x00f5ff, 0xdddddd);
-        grid.position.y = -0.1;
+        scene.add(new THREE.AmbientLight(0x404040, 2));
+        const grid = new THREE.GridHelper(30, 30, 0x00f5ff, 0x222222);
         scene.add(grid);
 
-        // Materijali
-        const whiteMat = new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 0.1, roughness: 0.4 });
-        const darkMat = new THREE.MeshStandardMaterial({ color: 0x333333, metalness: 0.8, roughness: 0.2 });
-        const turquoiseMat = new THREE.MeshBasicMaterial({ color: 0x00f5ff });
+        const metalMat = new THREE.MeshStandardMaterial({ color: 0x2a2d33, metalness: 0.8, roughness: 0.2 });
+        const cyanMat = new THREE.MeshStandardMaterial({ color: 0x00f5ff, emissive: 0x00f5ff, emissiveIntensity: 0.4 });
 
-        // Model
         base = new THREE.Group();
         scene.add(base);
-        base.add(new THREE.Mesh(new THREE.CylinderGeometry(1.6, 2, 0.6, 32), darkMat));
+        base.add(new THREE.Mesh(new THREE.CylinderGeometry(1.5, 1.8, 0.6, 32), metalMat));
 
         shoulder = new THREE.Group();
         shoulder.position.y = 0.5;
         base.add(shoulder);
-        shoulder.add(new THREE.Mesh(new THREE.SphereGeometry(0.7, 32, 32), darkMat));
+        shoulder.add(new THREE.Mesh(new THREE.SphereGeometry(0.7, 32, 32), cyanMat));
 
         const arm1 = new THREE.Group();
         shoulder.add(arm1);
-        arm1.add(new THREE.Mesh(new THREE.BoxGeometry(0.7, 4, 0.7), whiteMat));
+        arm1.add(new THREE.Mesh(new THREE.BoxGeometry(0.7, 4, 0.7), metalMat));
         arm1.children[0].position.y = 2;
 
         elbow = new THREE.Group();
         elbow.position.y = 4;
         arm1.add(elbow);
-        const joint2 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 1, 16), turquoiseMat);
+        const joint2 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 1, 16), cyanMat);
         joint2.rotation.z = Math.PI/2;
         elbow.add(joint2);
 
         forearm = new THREE.Group();
         elbow.add(forearm);
-        forearm.add(new THREE.Mesh(new THREE.BoxGeometry(0.5, 3, 0.5), whiteMat));
+        forearm.add(new THREE.Mesh(new THREE.BoxGeometry(0.5, 3, 0.5), metalMat));
         forearm.children[0].position.y = 1.5;
-
-        // Tirkizni detalji na ruci
-        const glowStrip = new THREE.Mesh(new THREE.BoxGeometry(0.55, 1.5, 0.1), turquoiseMat);
-        glowStrip.position.set(0, 1.5, 0.26);
-        forearm.add(glowStrip);
 
         arm1.rotation.z = -0.8;
         forearm.rotation.z = 1.5;
