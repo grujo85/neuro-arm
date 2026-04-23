@@ -25,18 +25,15 @@ To get a local copy up and running, follow these simple steps:
 1. **Clone the repository:**
    bash
    git clone [https://github.com/grujo85/neuro-arm.git](https://github.com/grujo85/neuro-arm.git)
-
 2.**Install dependencies:**
    Bash
 
    pip install -r requirements.txt
-
 3.**Launch the server:**
    Bash
 
    python app.py
-
-4. **Access the simulation:**
+4.**Access the simulation:**
    
    Open your browser and navigate to http://127.0.0.1:5000
     
